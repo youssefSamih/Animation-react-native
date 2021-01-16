@@ -1,16 +1,28 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import Animated, {Extrapolate, interpolate} from 'react-native-reanimated';
 
+interface ChatBubbleProps {
+  progress: Animated.Value<number>;
+}
 const {width: wWidth} = Dimensions.get('window');
 const width = wWidth * 0.8;
 const size = 32;
-const ChatBubble = () => {
+const ChatBubble = ({progress}: ChatBubbleProps) => {
   const bubbles = [0, 1, 2];
+  const delta = 1 / bubbles.length;
   return (
     <View style={styles.root}>
       <View style={styles.container}>
         {bubbles.map((i) => {
-          return <View key={i} style={styles.bubble} />;
+          const start = i * delta;
+          const end = start + delta;
+          const opacity = interpolate(progress, {
+            inputRange: [start, end],
+            outputRange: [0.5, 1],
+            extrapolate: Extrapolate.CLAMP,
+          });
+          return <Animated.View key={i} style={[styles.bubble, {opacity}]} />;
         })}
       </View>
     </View>
