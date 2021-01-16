@@ -22,7 +22,17 @@ const ChatBubble = ({progress}: ChatBubbleProps) => {
             outputRange: [0.5, 1],
             extrapolate: Extrapolate.CLAMP,
           });
-          return <Animated.View key={i} style={[styles.bubble, {opacity}]} />;
+          const scale = interpolate(progress, {
+            inputRange: [start, end],
+            outputRange: [1, 1.5],
+            extrapolate: Extrapolate.CLAMP,
+          });
+          return (
+            <Animated.View
+              key={i}
+              style={[styles.bubble, {opacity, transform: [{scale}]}]}
+            />
+          );
         })}
       </View>
     </View>

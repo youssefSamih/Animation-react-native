@@ -16,8 +16,10 @@ import {
   stopClock,
   timing,
   useCode,
+  useValue,
   Value,
 } from 'react-native-reanimated';
+import {useClock} from 'react-native-redash/lib/module/v1';
 
 const runTiming = (clock: Clock) => {
   const state = {
@@ -47,10 +49,10 @@ const runTiming = (clock: Clock) => {
   ]);
 };
 const App = () => {
-  const [play, setplay] = useState(false);
-  const progress = new Value(0);
-  const clock = new Clock();
-  const isPlaying = new Value(0);
+  const [play, setPlay] = useState(false);
+  const clock = useClock();
+  const progress = useValue(0);
+  const isPlaying = useValue(0);
   useCode(() => set(isPlaying, play ? 1 : 0), [play]);
   useCode(
     () => [
@@ -66,7 +68,7 @@ const App = () => {
       <Button
         label={play ? 'Pause' : 'Play'}
         primary
-        onPress={() => setplay((prev) => !prev)}
+        onPress={() => setPlay((prev) => !prev)}
       />
     </View>
   );
