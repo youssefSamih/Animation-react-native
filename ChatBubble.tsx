@@ -10,7 +10,7 @@ const ChatBubble = () => {
     <View style={styles.root}>
       <View style={styles.container}>
         {bubbles.map((i) => {
-          return <View style={styles.bubble} />;
+          return <View key={i} style={styles.bubble} />;
         })}
       </View>
     </View>
